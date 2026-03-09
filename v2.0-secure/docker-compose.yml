@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: sqli_secure_db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: userdb
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - db_data_secure:/var/lib/mysql
+    networks:
+      - sqli_secure_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-prootpassword"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  web:
+    build: ./app
+    container_name: sqli_secure_web
+    ports:
+      - "5001:5000"
+    environment:
+      DB_HOST: db
+      DB_USER: root
+      DB_PASSWORD: rootpassword
+      DB_NAME: userdb
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - sqli_secure_network
+    volumes:
+      - ./app:/app
+
+networks:
+  sqli_secure_network:
+    driver: bridge
+
+volumes:
+  db_data_secure:

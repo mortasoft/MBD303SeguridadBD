@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Injection Demo - v2.0 SECURE</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+            max-width: 800px;
+            width: 100%;
+        }
+        
+        .success-banner {
+            background: #28a745;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .version {
+            text-align: center;
+            color: #28a745;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+        
+        .description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .menu {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .menu-item {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            padding: 30px 20px;
+            border-radius: 15px;
+            text-decoration: none;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .menu-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+        
+        .menu-item h3 {
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+        
+        .menu-item p {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        
+        .features {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        
+        .features h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .features ul {
+            list-style: none;
+            color: #666;
+        }
+        
+        .features li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .features li:before {
+            content: "✅";
+            position: absolute;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="success-banner">
+            ✅ APLICACIÓN SEGURA - Protegida contra SQL Injection
+        </div>
+        
+        <h1>🔒 Sistema de Gestión de Usuarios</h1>
+        <p class="version">Versión 2.0 - SECURE</p>
+        
+        <p class="description">
+            Esta versión implementa las mejores prácticas de seguridad para prevenir 
+            ataques de SQL Injection mediante consultas parametrizadas y sanitización de entrada.
+        </p>
+        
+        <div class="menu">
+            <a href="/users" class="menu-item">
+                <h3>👥 Ver Usuarios</h3>
+                <p>Lista completa de usuarios registrados</p>
+            </a>
+            
+            <a href="/search" class="menu-item">
+                <h3>🔍 Buscar Usuario</h3>
+                <p>Búsqueda segura con consultas parametrizadas</p>
+            </a>
+            
+            <a href="/login" class="menu-item">
+                <h3>🔑 Login</h3>
+                <p>Autenticación segura</p>
+            </a>
+        </div>
+        
+        <div class="features">
+            <h3>Medidas de Seguridad Implementadas:</h3>
+            <ul>
+                <li>Consultas parametrizadas (Prepared Statements)</li>
+                <li>Sanitización de entrada del usuario</li>
+                <li>Validación de formato de datos</li>
+                <li>Escape automático de caracteres especiales</li>
+                <li>Mensajes de error genéricos (sin exposición de información)</li>
+                <li>Limitación de longitud de entrada</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

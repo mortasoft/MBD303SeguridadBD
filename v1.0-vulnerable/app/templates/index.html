@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Injection Demo - v1.0 VULNERABLE</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+            max-width: 800px;
+            width: 100%;
+        }
+        
+        .warning-banner {
+            background: #ff4444;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .version {
+            text-align: center;
+            color: #ff4444;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+        
+        .description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .menu {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .menu-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 20px;
+            border-radius: 15px;
+            text-decoration: none;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .menu-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+        
+        .menu-item h3 {
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+        
+        .menu-item p {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        
+        .features {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        
+        .features h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .features ul {
+            list-style: none;
+            color: #666;
+        }
+        
+        .features li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .features li:before {
+            content: "⚠️";
+            position: absolute;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="warning-banner">
+            ⚠️ APLICACIÓN VULNERABLE - SOLO PARA FINES EDUCATIVOS ⚠️
+        </div>
+        
+        <h1>🔓 Sistema de Gestión de Usuarios</h1>
+        <p class="version">Versión 1.0 - VULNERABLE</p>
+        
+        <p class="description">
+            Esta aplicación web contiene vulnerabilidades intencionales de SQL Injection 
+            para demostrar técnicas de ataque y defensa en seguridad de aplicaciones web.
+        </p>
+        
+        <div class="menu">
+            <a href="/users" class="menu-item">
+                <h3>👥 Ver Usuarios</h3>
+                <p>Lista completa de usuarios registrados</p>
+            </a>
+            
+            <a href="/search" class="menu-item">
+                <h3>🔍 Buscar Usuario</h3>
+                <p>Búsqueda vulnerable a SQL Injection</p>
+            </a>
+            
+            <a href="/login" class="menu-item">
+                <h3>🔑 Login</h3>
+                <p>Autenticación vulnerable</p>
+            </a>
+        </div>
+        
+        <div class="features">
+            <h3>Vulnerabilidades Presentes:</h3>
+            <ul>
+                <li>Concatenación directa de SQL sin sanitización</li>
+                <li>Sin uso de consultas preparadas (prepared statements)</li>
+                <li>Sin validación de entrada del usuario</li>
+                <li>Exposición de información sensible en mensajes de error</li>
+                <li>Sin escape de caracteres especiales</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
