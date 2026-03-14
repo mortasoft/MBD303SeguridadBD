@@ -46,3 +46,8 @@ INSERT INTO sensitive_data (user_id, credit_card, ssn, secret_key) VALUES
 SELECT 'Database initialized successfully!' as status;
 SELECT COUNT(*) as total_users FROM users;
 SELECT COUNT(*) as total_sensitive_records FROM sensitive_data;
+
+-- Asegurar permisos para conexiones desde otros contenedores
+-- En MySQL 8.0+ para el usuario root ya creado durante la inicialización
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;
+FLUSH PRIVILEGES;

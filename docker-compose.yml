@@ -1,0 +1,107 @@
+version: '3.8'
+
+services:
+  # --- VERSIÓN VULNERABLE (v1.0) ---
+  vulnerable-db:
+    image: mysql:8.0
+    container_name: mbd303_vulnerable_db
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_ROOT_HOST: '%'
+    ports:
+      - "${VULNERABLE_DB_PORT}:3306"
+    volumes:
+      - ./v1.0-vulnerable/db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - vulnerable_db_data:/var/lib/mysql
+    networks:
+      - lab_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  vulnerable-web:
+    build: 
+      context: ./v1.0-vulnerable/app
+    container_name: mbd303_vulnerable_web
+    ports:
+      - "${VULNERABLE_WEB_PORT}:5000"
+    environment:
+      DB_HOST: vulnerable-db
+      DB_USER: root
+      DB_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      DB_NAME: ${MYSQL_DATABASE}
+    depends_on:
+      vulnerable-db:
+        condition: service_healthy
+    networks:
+      - lab_network
+    volumes:
+      - ./v1.0-vulnerable/app:/app
+
+  # --- VERSIÓN SEGURA (v2.0) ---
+  secure-db:
+    image: mysql:8.0
+    container_name: mbd303_secure_db
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_ROOT_HOST: '%'
+    ports:
+      - "${SECURE_DB_PORT}:3306"
+    volumes:
+      - ./v2.0-secure/db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - secure_db_data:/var/lib/mysql
+    networks:
+      - lab_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  secure-web:
+    build:
+      context: ./v2.0-secure/app
+    container_name: mbd303_secure_web
+    ports:
+      - "${SECURE_WEB_PORT}:5000"
+    environment:
+      DB_HOST: secure-db
+      DB_USER: root
+      DB_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      DB_NAME: ${MYSQL_DATABASE}
+      REDIS_HOST: redis
+    depends_on:
+      secure-db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - lab_network
+    volumes:
+      - ./v2.0-secure/app:/app
+
+  # --- SERVICIOS COMPARTIDOS ---
+  redis:
+    image: redis:7-alpine
+    container_name: mbd303_redis
+    ports:
+      - "${REDIS_PORT}:6379"
+    networks:
+      - lab_network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+networks:
+  lab_network:
+    driver: bridge
+
+volumes:
+  vulnerable_db_data:
+  secure_db_data:
